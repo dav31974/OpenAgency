@@ -2,11 +2,14 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PropertyRepository")
+ * @UniqueEntity("title")
  */
 class Property
 {
@@ -24,6 +27,12 @@ class Property
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Le titre doit contenir au moins {{ limit }} caractères",
+     *      maxMessage = "Le titre ne doit pas dépasser{{ limit }} caractères"
+     * )
      */
     private $title;
 
@@ -34,6 +43,7 @@ class Property
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(min="10", max="500", minMessage="La surface du bien doit etre supèrieure à 10 m2", maxMessage="La surface du bien doit etre infèrieure à 800 m2")
      */
     private $surface;
 
@@ -74,6 +84,8 @@ class Property
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Regex(pattern="/^(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}$/", message="Le code postal doit etre valide")
+     * 
      */
     private $postal_code;
 

@@ -13,7 +13,7 @@ class PropertyController extends AbstractController
 {
 
     /**
-     * -----Permet d'afficher tous les biens-----
+     * -----Permet d'afficher tous les biens non vendu-----
      * @Route("/biens", name="property_index")
      * @return Response
      */

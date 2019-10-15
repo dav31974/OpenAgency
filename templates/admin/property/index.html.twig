@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} Gérer les biens{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Gestion des biens</h1>
+        {% for label, messages in app.flashes %}
+            <div class="container">
+                <div class="alert alert-{{ label }}">
+                    {% for message in messages %}
+                        <p>{{ message | raw }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        <table class="table table-striped">
+            <thead>
+                <th>Titre</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+                {% for property in properties %}
+                    <tr>
+                        <td>{{ property.title }}</td>
+                        <td>
+                            <a href="{{ path('admin_property_edit', {id: property.id}) }}" class="btn btn-secondary">Editer</a>
+                            <a href="{{ path('admin_property_delete', {id: property.id}) }}" onclick="return confirm('Etes-vous sure ?')" class="btn btn-danger">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-right">
+            <a href="{{ path('admin_property_create') }}" class="btn btn-primary">Créer un nouveau bien</a>
+        </div>
+    </div>
+{% endblock %}
