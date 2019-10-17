@@ -3,22 +3,37 @@
 {% block title %}{{ parent() }} Tous nos biens{% endblock %}
 
 {% block body %}
-    <div class="container mt-4">
-        <h1>Tous nos biens disponnibles !</h1>
-        <div class="row flex">
-            {% for property in properties %}
-                <div class="col-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <a href="{{ path('property_show', {id: property.id, slug: property.slug}) }}">{{ property.title }}</a>
-                            </h5>
-                            <p class="card-text">{{ property.city }} ({{ property.postalCode }})</p>
-                            <div class="text-primary" style="font-weight: bold;font-size: 2rem;">{{ property.formatedPrice }}&euro;</div>
-                        </div>
+    <div class="jumbotron">
+        <div class="container">
+            {{ form_start(form) }}
+            <div class="form-row align-items-end">
+                <div class="col">
+                    {{ form_row(form.minSurface) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.maxPrice) }}
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <button class="btn btn-primary">Rechercher</button>
                     </div>
                 </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+    <div class="container mt-4">
+        <h1>Tous nos biens disponnibles !</h1>
+        <div class="row">
+            {% for property in properties %}               
+                    <div class="col-md-4">
+                        {% include 'property/_property.html.twig' %}
+                    </div>
             {% endfor %}
+        </div>
+        {# display navigation #}
+        <div class="navigation">
+            {{ knp_pagination_render(properties) }}
         </div>
     </div>
 {% endblock %}

@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Property;
+use App\Entity\PropertySearch;
+use App\Form\PropertySearchType;
 use App\Repository\PropertyRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,12 +21,23 @@ class PropertyController extends AbstractController
      * @Route("/biens", name="property_index")
      * @return Response
      */
-    public function index(PropertyRepository $repo, ObjectManager $manager)
+    public function index(PropertyRepository $repo, PaginatorInterface $paginator, Request $request, ObjectManager $manager)
     {
-        $properties = $repo->findAllVisible();
+        $search = new PropertySearch();
+        $form = $this->createForm(PropertySearchType::class, $search);
+        $form->handleRequest($request);
+
+        
+
+        $properties = $paginator->paginate(
+            $repo->findAllVisibleQuery($search),
+            $request->query->getInt('page', 1),
+            12
+        );
         return $this->render('property/index.html.twig', [
             'properties' => $properties,
-            'current_menu' => 'properties'
+            'current_menu' => 'properties',
+            'form' => $form->createView()
         ]);
     }
 
