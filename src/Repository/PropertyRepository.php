@@ -22,7 +22,7 @@ class PropertyRepository extends ServiceEntityRepository
     }
 
     /**
-     * Permet de récuperer tous les bien non vendu
+     * Permet de récuperer tous les bien non vendu et filtrés
      *
      * @return Query
      */
@@ -40,6 +40,16 @@ class PropertyRepository extends ServiceEntityRepository
             $query = $query
                 ->andWhere('p.surface >= :minsurface')
                 ->setParameter('minsurface', $search->getMinSurface());
+        }
+
+        if($search->getOptions()->count() > 0) {
+            $k = 0;
+            foreach($search->getOptions() as $k => $option) {
+                $k++;
+                $query = $query
+                    ->andWhere(":option$k MEMBER OF p.options")
+                    ->setParameter("option$k", $option);
+            }
         }
 
         return $query->getQuery();
