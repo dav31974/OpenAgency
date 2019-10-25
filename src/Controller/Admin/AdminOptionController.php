@@ -22,6 +22,7 @@ class AdminOptionController extends AbstractController
     {
         return $this->render('admin/option/index.html.twig', [
             'options' => $optionRepository->findAll(),
+            'current_menu' => 'optionsmenu'
         ]);
     }
 
