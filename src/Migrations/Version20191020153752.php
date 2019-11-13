@@ -22,7 +22,7 @@ final class Version20191020153752 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE property ADD filename VARCHAR(255) NOT NULL, ADD created_at DATETIME DEFAULT NULL, ADD updated_at DATETIME DEFAULT NULL');
+        $this->addSql('ALTER TABLE property ADD filename VARCHAR(255) NOT NULL, ADD updated_at DATETIME DEFAULT NULL');
     }
 
     public function down(Schema $schema) : void
