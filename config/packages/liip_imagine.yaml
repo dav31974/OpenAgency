@@ -14,7 +14,7 @@ liip_imagine:
             size: [800, 530]
             mode: outbound
     # valid drivers options include "gd" or "gmagick" or "imagick"
-    driver: "gd"
+    # driver: "gd"
     resolvers:
 
         default:
