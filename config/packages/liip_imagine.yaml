@@ -15,4 +15,13 @@ liip_imagine:
             mode: outbound
     # valid drivers options include "gd" or "gmagick" or "imagick"
     driver: "gd"
+    resolvers:
+
+        default:
+            web_path:
+                web_root: "%kernel.root_dir%/.."
+                cache_prefix: "media/cache"
+
+
+
 
